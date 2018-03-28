@@ -53,6 +53,7 @@ group :development do
   gem 'bullet'
   gem 'rubocop', require: false
   gem 'overcommit'
+  gem 'scss_lint', require: false
 end
 
 group :test do
