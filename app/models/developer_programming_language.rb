@@ -1,0 +1,2 @@
+class DeveloperProgrammingLanguage < ApplicationRecord
+end
