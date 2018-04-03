@@ -1,9 +1,18 @@
 class DevelopersController < ApplicationController
   before_action :set_developer, only: [:show, :edit, :update, :destroy]
+  before_action :get_master_data, only: [:index, :search]
 
   # GET /developers
   def index
-    @developers = Developer.all
+    @developer_search_form = DeveloperSearchForm.new
+    @developers = Developer.all.includes(:developer_languages, :developer_programming_languages)
+  end
+
+  def search
+    @developer_search_form = DeveloperSearchForm.new(developer_search_params)
+    @developers = @developer_search_form.search
+
+    render :index
   end
 
   # GET /developers/1
@@ -46,13 +55,22 @@ class DevelopersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_developer
-      @developer = Developer.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def developer_params
-      params.fetch(:developer, {})
-    end
+  def get_master_data
+    @pro_lang = ProgrammingLanguage.all.pluck(:name, :id)
+    @lang = Language.all.pluck(:code, :id)
+  end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_developer
+    @developer = Developer.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def developer_params
+    params.require(:developer).permit(:email)
+  end
+
+  def developer_search_params
+    params.require(:developer_search_form).permit(:email, :pro_lang, :lang)
+  end
 end
