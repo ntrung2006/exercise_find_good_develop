@@ -54,6 +54,7 @@ group :development do
   gem 'rubocop', require: false
   gem 'overcommit'
   gem 'scss_lint', require: false
+  gem 'pry-rails'
 end
 
 group :test do
