@@ -6,7 +6,7 @@ namespace :dev do
 
   desc 'Generate test data'
   task :generate_data, [:dev_num] => :environment do |_, args|
-    reset_args(args)
+    get_args(args)
 
     create_programming_language
     create_language
@@ -38,7 +38,7 @@ def create_language
   end
 end
 
-def reset_args(args)
+def get_args(args)
   @args = {}
   @args[:dev_num] = (args.users_num || 100).to_i
 end
