@@ -5,12 +5,12 @@ require 'rails_helper'
 RSpec.describe DeveloperSearchForm do
   describe '#search' do
     before do
-      @devs = Developer.create([{ email: 'trung@gmail.com' }, { email: 'test@gmail.com' }])
-      @pro_lang = ProgrammingLanguage.create([{ name: 'Ruby' }, { name: 'PHP' }])
-      @lang = Language.create([{ code: 'en' }, { code: 'ja' }])
+      @developers = Developer.create([{ email: 'trung@gmail.com' }, { email: 'test@gmail.com' }])
+      @programming_languages = ProgrammingLanguage.create([{ name: 'Ruby' }, { name: 'PHP' }])
+      @languages = Language.create([{ code: 'en' }, { code: 'ja' }])
 
-      @dev_lang = DeveloperLanguage.create([{ language_id: @pro_lang.first.id, developer_id: @devs.first.id }])
-      @dev_pro_lang = DeveloperProgrammingLanguage.create([{ programming_language_id: @pro_lang.first.id, developer_id: @devs.first.id }])
+      @developers.first.programming_languages.create(@programming_languages.first)
+      @developers.first.languages.create(@languages.first)
 
     end
 
@@ -23,12 +23,12 @@ RSpec.describe DeveloperSearchForm do
 
     context 'with both programming_language and language params' do
       it 'return result where dev know Ruby and English' do
-        res = DeveloperSearchForm.new({pro_lang: @pro_lang.first.id, lang: @lang.first.id})
+        res = DeveloperSearchForm.new({programming_language_id: @programming_languages.first.id, language_id: @languages.first.id})
         expect(res.search.size).to eq(1)
       end
 
       it 'return no result where dev know Ruby and Japan language' do
-        res = DeveloperSearchForm.new({pro_lang: @pro_lang.first.id, lang: @lang.last.id})
+        res = DeveloperSearchForm.new({programming_language_id: @programming_languages.first.id, language_id: @languages.last.id})
         expect(res.search.size).to eq(0)
       end
     end
