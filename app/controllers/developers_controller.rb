@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class DevelopersController < ApplicationController
-  before_action :set_developer, only: [:show, :edit, :update, :destroy]
-  before_action :get_master_data, only: [:index, :search]
+  before_action :set_developer, only: %i[show edit update destroy]
+  before_action :fetch_master_data, only: %i[index search]
 
   # GET /developers
   def index
     @developer_search_form = DeveloperSearchForm.new
-    @developers = Developer.includes(:developer_languages, :developer_programming_languages)
+    @developers = Developer.all
   end
 
   def search
@@ -16,8 +18,7 @@ class DevelopersController < ApplicationController
   end
 
   # GET /developers/1
-  def show
-  end
+  def show; end
 
   # GET /developers/new
   def new
@@ -25,8 +26,7 @@ class DevelopersController < ApplicationController
   end
 
   # GET /developers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /developers
   def create
@@ -56,12 +56,11 @@ class DevelopersController < ApplicationController
 
   private
 
-  def get_master_data
+  def fetch_master_data
     @programming_languages = ProgrammingLanguage.pluck(:name, :id)
     @languages = Language.pluck(:code, :id)
-    # @programming_language_id = params[:programming_language_id] || nil
-    # @language_id = params[:language_id] || nil
   end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_developer
     @developer = Developer.find(params[:id])

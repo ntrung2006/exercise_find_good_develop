@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DeveloperSearchForm
   include Virtus.model
   include ActiveModel::Model
@@ -6,7 +8,6 @@ class DeveloperSearchForm
   attribute :language_id, Integer
 
   def search
-
     developers = Developer.all
 
     developers = developers.joins(:developer_languages).where("developer_languages.language_id = #{language_id}") if language_id.present?
