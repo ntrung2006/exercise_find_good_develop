@@ -3,8 +3,8 @@
 <h1>Developers</h1>
 
 <%= form_for @developer_search_form, url: '/search' do |f| %>
-  <%= f.select :pro_lang, @pro_lang, prompt: 'Select Developer Programming', name: 'Developer Programming' %>
-  <%= f.select :lang, @lang, prompt: 'Select Language', name: 'Developer Language' %>
+  <%= f.select :programming_language_id, @programming_languages, prompt: 'Select Developer Programming', name: 'Developer Programming' %>
+  <%= f.select :language_id, @languages, prompt: 'Select Language', name: 'Developer Language' %>
   <%= f.submit 'Search' %>
 <% end %>
 

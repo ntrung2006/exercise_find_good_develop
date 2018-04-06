@@ -4,14 +4,13 @@ require 'rails_helper'
 
 RSpec.describe DeveloperSearchForm do
   describe '#search' do
+
+    let(:language) { create :language }
+    let(:programming_language) { create :programming_language }
+
     before do
-      @developers = Developer.create([{ email: 'trung@gmail.com' }, { email: 'test@gmail.com' }])
-      @programming_languages = ProgrammingLanguage.create([{ name: 'Ruby' }, { name: 'PHP' }])
-      @languages = Language.create([{ code: 'en' }, { code: 'ja' }])
-
-      @developers.first.programming_languages.create(@programming_languages.first)
-      @developers.first.languages.create(@languages.first)
-
+      create(:developer, programming_languages: [programming_language], languages: [language])
+      create :developer
     end
 
     context 'with no params' do
@@ -21,14 +20,24 @@ RSpec.describe DeveloperSearchForm do
       end
     end
 
-    context 'with both programming_language and language params' do
-      it 'return result where dev know Ruby and English' do
-        res = DeveloperSearchForm.new({programming_language_id: @programming_languages.first.id, language_id: @languages.first.id})
+    context 'with params' do
+      it 'returns developers know a Programming Language.' do
+        res = DeveloperSearchForm.new(programming_language_id: programming_language.id)
         expect(res.search.size).to eq(1)
       end
 
-      it 'return no result where dev know Ruby and Japan language' do
-        res = DeveloperSearchForm.new({programming_language_id: @programming_languages.first.id, language_id: @languages.last.id})
+      it 'returns developers know a Language.' do
+        res = DeveloperSearchForm.new(language_id: language.id)
+        expect(res.search.size).to eq(1)
+      end
+
+      it 'return one result where dev know language and programming language' do
+        res = DeveloperSearchForm.new({programming_language_id: programming_language.id, language_id: language.id})
+        expect(res.search.size).to eq(1)
+      end
+
+      it 'No result where dev know Programming Language but do not kow language.' do
+        res = DeveloperSearchForm.new({programming_language_id: programming_language.id, language_id: 99})
         expect(res.search.size).to eq(0)
       end
     end

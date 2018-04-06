@@ -5,7 +5,7 @@ class DevelopersController < ApplicationController
   # GET /developers
   def index
     @developer_search_form = DeveloperSearchForm.new
-    @developers = Developer.all.includes(:developer_languages, :developer_programming_languages)
+    @developers = Developer.includes(:developer_languages, :developer_programming_languages)
   end
 
   def search
@@ -57,8 +57,10 @@ class DevelopersController < ApplicationController
   private
 
   def get_master_data
-    @pro_lang = ProgrammingLanguage.all.pluck(:name, :id)
-    @lang = Language.all.pluck(:code, :id)
+    @programming_languages = ProgrammingLanguage.pluck(:name, :id)
+    @languages = Language.pluck(:code, :id)
+    # @programming_language_id = params[:programming_language_id] || nil
+    # @language_id = params[:language_id] || nil
   end
   # Use callbacks to share common setup or constraints between actions.
   def set_developer
@@ -71,6 +73,6 @@ class DevelopersController < ApplicationController
   end
 
   def developer_search_params
-    params.require(:developer_search_form).permit(:email, :pro_lang, :lang)
+    params.require(:developer_search_form).permit(:programming_language_id, :language_id)
   end
 end
