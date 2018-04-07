@@ -15,30 +15,30 @@ RSpec.describe DeveloperSearchForm do
 
     context 'with no params' do
       it 'returns all users' do
-        res = DeveloperSearchForm.new
-        expect(res.search.size).to eq(2)
+        developer_search_form = DeveloperSearchForm.new
+        expect( developer_search_form.search.size).to eq(2)
       end
     end
 
     context 'with params' do
       it 'returns developers know a Programming Language.' do
-        res = DeveloperSearchForm.new(programming_language_id: programming_language.id)
-        expect(res.search.size).to eq(1)
+         developer_search_form = DeveloperSearchForm.new(programming_language_id: programming_language.id)
+        expect( developer_search_form.search.size).to eq(1)
       end
 
       it 'returns developers know a Language.' do
-        res = DeveloperSearchForm.new(language_id: language.id)
-        expect(res.search.size).to eq(1)
+         developer_search_form = DeveloperSearchForm.new(language_id: language.id)
+        expect( developer_search_form.search.size).to eq(1)
       end
 
-      it 'return one result where dev know language and programming language' do
-        res = DeveloperSearchForm.new({programming_language_id: programming_language.id, language_id: language.id})
-        expect(res.search.size).to eq(1)
+      it 'return one  developer_search_formult where dev know language and programming language' do
+         developer_search_form = DeveloperSearchForm.new({programming_language_id: programming_language.id, language_id: language.id})
+        expect( developer_search_form.search.size).to eq(1)
       end
 
-      it 'No result where dev know Programming Language but do not kow language.' do
-        res = DeveloperSearchForm.new({programming_language_id: programming_language.id, language_id: 99})
-        expect(res.search.size).to eq(0)
+      it 'No  developer_search_formult where dev know Programming Language but do not kow language.' do
+         developer_search_form = DeveloperSearchForm.new({programming_language_id: programming_language.id, language_id: 99})
+        expect( developer_search_form.search.size).to eq(0)
       end
     end
   end
