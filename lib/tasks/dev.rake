@@ -8,8 +8,8 @@ namespace :dev do
   task :generate_data, [:dev_num] => :environment do |_, args|
     get_args(args)
 
-    create_programming_language
-    create_language
+    create_programming_languages
+    create_languages
 
     programming_languages = ProgrammingLanguage.all
     languages = Language.all
@@ -22,19 +22,15 @@ namespace :dev do
   end
 end
 
-def create_programming_language
-  return false if ProgrammingLanguage.find_by(name: 'ruby').present?
-
+def create_programming_languages
   %w[ruby javascript php kotlin].each do |name|
-    FactoryBot.create :programming_language, name: name
+    ProgrammingLanguage.find_or_create_by(name: name)
   end
 end
 
-def create_language
-  return false if Language.find_by(code: 'en').present?
-
+def create_languages
   %w[en vn ja].each do |code|
-    FactoryBot.create :language, code: code
+    Language.find_or_create_by(code: code)
   end
 end
 
