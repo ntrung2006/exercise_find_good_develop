@@ -2,9 +2,9 @@
 
 <h1>Developers</h1>
 
-<%= form_for @developer_search_form, url: '/search' do |f| %>
-  <%= f.select :programming_language_id, @programming_languages, prompt: 'Select Developer Programming', name: 'Developer Programming' %>
-  <%= f.select :language_id, @languages, prompt: 'Select Language', name: 'Developer Language' %>
+<%= form_for :developer_search_form, method: :get do |f| %>
+  <%= f.select :programming_language_id, ProgrammingLanguage.pluck(:name, :id), prompt: 'Select Developer Programming', name: 'Developer Programming' %>
+  <%= f.select :language_id, Language.pluck(:code, :id), prompt: 'Select Language', name: 'Developer Language' %>
   <%= f.submit 'Search' %>
 <% end %>
 

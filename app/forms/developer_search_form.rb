@@ -4,8 +4,16 @@ class DeveloperSearchForm
   include Virtus.model
   include ActiveModel::Model
 
-  attribute :programming_language_id, Integer
-  attribute :language_id, Integer
+  FORM_FIELDS = %w[programming_language_id language_id].freeze
+
+  FORM_FIELDS.each do |f|
+    attribute f, Integer
+  end
+
+  def initialize(params)
+    @developer_search_form = params[:developer_search_form] || {}
+    FORM_FIELDS.each { |f| send("#{f}=", @developer_search_form[f]) }
+  end
 
   def search
     developers = Developer.all

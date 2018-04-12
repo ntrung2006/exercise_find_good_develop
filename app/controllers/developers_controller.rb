@@ -2,19 +2,11 @@
 
 class DevelopersController < ApplicationController
   before_action :set_developer, only: %i[show edit update destroy]
-  before_action :fetch_master_data, only: %i[index search]
 
   # GET /developers
   def index
-    @developer_search_form = DeveloperSearchForm.new
-    @developers = Developer.all
-  end
-
-  def search
     @developer_search_form = DeveloperSearchForm.new(developer_search_params)
     @developers = @developer_search_form.search
-
-    render :index
   end
 
   # GET /developers/1
@@ -56,11 +48,6 @@ class DevelopersController < ApplicationController
 
   private
 
-  def fetch_master_data
-    @programming_languages = ProgrammingLanguage.pluck(:name, :id)
-    @languages = Language.pluck(:code, :id)
-  end
-
   # Use callbacks to share common setup or constraints between actions.
   def set_developer
     @developer = Developer.find(params[:id])
@@ -72,6 +59,6 @@ class DevelopersController < ApplicationController
   end
 
   def developer_search_params
-    params.require(:developer_search_form).permit(:programming_language_id, :language_id)
+    params.permit(developer_search_form: DeveloperSearchForm::FORM_FIELDS)
   end
 end

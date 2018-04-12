@@ -15,7 +15,7 @@
     <%= form.label :email %><br />
     <%= form.email_field :email, { autofocus: true } %>
 
-    <% unless @developer.errors.full_messages.empty? %>
+    <% if @developer.errors.full_messages.precent? %>
       <% @developer.errors.full_messages.each do |error_message| %>
         <label class="error"><%= error_message %> <br /></label>
       <% end %>

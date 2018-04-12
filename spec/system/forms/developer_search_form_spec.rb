@@ -54,4 +54,3 @@ RSpec.describe 'Developer search', type: :system do
     expect(page).to have_no_content(@developer.email)
   end
 end
-# rubocop:enable
