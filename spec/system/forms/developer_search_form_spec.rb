@@ -4,13 +4,13 @@ require 'rails_helper'
 
 RSpec.describe 'Developer search', type: :system do
 
-  let(:language) { create :language }
-  let(:programming_language) { create :programming_language }
+  let(:language) { create(:language) }
+  let(:programming_language) { create(:programming_language) }
 
   before do
     @developer = create(:developer, programming_languages: [programming_language], languages: [language])
-    create :developer
-    @language = create :language
+    create(:developer)
+    @language = create(:language)
   end
 
   it 'Search first load page' do

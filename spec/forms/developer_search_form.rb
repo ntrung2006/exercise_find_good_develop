@@ -5,12 +5,12 @@ require 'rails_helper'
 RSpec.describe DeveloperSearchForm do
   describe '#search' do
 
-    let(:language) { create :language }
-    let(:programming_language) { create :programming_language }
+    let(:language) { create(:language) }
+    let(:programming_language) { create(:programming_language) }
 
     before do
       create(:developer, programming_languages: [programming_language], languages: [language])
-      create :developer
+      create(:developer)
     end
 
     context 'with no params' do
@@ -22,22 +22,22 @@ RSpec.describe DeveloperSearchForm do
 
     context 'with params' do
       it 'returns developers know a Programming Language.' do
-         developer_search_form = DeveloperSearchForm.new(programming_language_id: programming_language.id)
+        developer_search_form = DeveloperSearchForm.new(programming_language_id: programming_language.id)
         expect(developer_search_form.search.size).to eq(1)
       end
 
       it 'returns developers know a Language.' do
-         developer_search_form = DeveloperSearchForm.new(language_id: language.id)
+        developer_search_form = DeveloperSearchForm.new(language_id: language.id)
         expect(developer_search_form.search.size).to eq(1)
       end
 
       it 'return one result where dev know language and programming language' do
-         developer_search_form = DeveloperSearchForm.new({programming_language_id: programming_language.id, language_id: language.id})
+        developer_search_form = DeveloperSearchForm.new({programming_language_id: programming_language.id, language_id: language.id})
         expect(developer_search_form.search.size).to eq(1)
       end
 
       it 'No result where dev know Programming Language but do not kow language.' do
-         developer_search_form = DeveloperSearchForm.new({programming_language_id: programming_language.id, language_id: 99})
+        developer_search_form = DeveloperSearchForm.new({programming_language_id: programming_language.id, language_id: 99})
         expect(developer_search_form.search.size).to eq(0)
       end
     end
