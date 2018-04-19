@@ -11,6 +11,17 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label :email %><br />
+    <%= form.email_field :email, { autofocus: true } %>
+
+    <% if @developer.errors.full_messages.precent? %>
+      <% @developer.errors.full_messages.each do |error_message| %>
+        <label class="error"><%= error_message %> <br /></label>
+      <% end %>
+    <% end %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

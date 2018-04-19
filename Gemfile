@@ -33,6 +33,7 @@ gem 'turbolinks', '~> 5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'virtus'
 gem 'active_model_serializers'
 
 group :development, :test do
@@ -57,6 +58,7 @@ group :development do
   gem 'rubocop', require: false
   gem 'overcommit'
   gem 'scss_lint', require: false
+  gem 'pry-rails'
 end
 
 group :test do
