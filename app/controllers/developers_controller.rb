@@ -1,16 +1,14 @@
-# frozen_string_literal: true
-
 class DevelopersController < ApplicationController
-  before_action :set_developer, only: %i[show edit update destroy]
+  before_action :set_developer, only: [:show, :edit, :update, :destroy]
 
   # GET /developers
   def index
-    @developer_search_form = DeveloperSearchForm.new(developer_search_params)
-    @developers = @developer_search_form.search
+    @developers = Developer.all
   end
 
   # GET /developers/1
-  def show; end
+  def show
+  end
 
   # GET /developers/new
   def new
@@ -18,7 +16,8 @@ class DevelopersController < ApplicationController
   end
 
   # GET /developers/1/edit
-  def edit; end
+  def edit
+  end
 
   # POST /developers
   def create
@@ -47,18 +46,13 @@ class DevelopersController < ApplicationController
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_developer
+      @developer = Developer.find(params[:id])
+    end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_developer
-    @developer = Developer.find(params[:id])
-  end
-
-  # Only allow a trusted parameter "white list" through.
-  def developer_params
-    params.require(:developer).permit(:email)
-  end
-
-  def developer_search_params
-    params.permit(developer_search_form: DeveloperSearchForm::FORM_FIELDS)
-  end
+    # Only allow a trusted parameter "white list" through.
+    def developer_params
+      params.fetch(:developer, {})
+    end
 end

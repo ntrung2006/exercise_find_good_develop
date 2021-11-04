@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
   resources :developers
-
-  root to: 'developers#index'
-  
   namespace :api do
     namespace :v1 do
       resources :developers, only: %i[show]
